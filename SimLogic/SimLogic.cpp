@@ -22,5 +22,11 @@ int main()
     {
         bob.append(a.append("\n"));
     }
+    ifs.close();
     std::cout << bob;
+}
+
+std::string read()
+{
+    return "idk";
 }
