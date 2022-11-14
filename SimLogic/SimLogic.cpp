@@ -20,7 +20,7 @@ int main()
     std::string bob;
     while (std::getline(ifs, a)) //when reading from file, space and newline are both used as separators
     {
-        bob.append(a);
+        bob.append(a.append("\n"));
     }
     std::cout << bob;
 }
