@@ -1,4 +1,7 @@
 #include <iostream>
+#include <istream>
+#include <ostream>
+#include <sstream>
 #include <fstream>
 
 //interesting discovery: for vscode, local dir is not the .exe's but the .sln file
@@ -15,7 +18,7 @@ int main()
 
     std::string a;
     std::string bob;
-    while (ifs>>a) //when reading from file, space and newline are both used as separators
+    while (std::getline(ifs, a)) //when reading from file, space and newline are both used as separators
     {
         bob.append(a);
     }
