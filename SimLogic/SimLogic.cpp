@@ -3,18 +3,35 @@
 #include <ostream>
 #include <sstream>
 #include <fstream>
+#include <filesystem>
+#include <string>
 
-//interesting discovery: for vscode, local dir is not the .exe's but the .sln file
+//interesting discovery: for visual studio, local dir is not the .exe's but the .sln file
+
+std::string read(std::string);
 
 int main()
 {
-    std::ifstream ifs;
-    ifs.open("message.txt");
-    if (!ifs) {
-        std::cout << "Bye World!\n";
-        exit(-1);
+    for (const auto& file : std::filesystem::directory_iterator("files"))
+    {
+        if (file.path().extension() == ".txt")
+        {
+            std::string s = file.path().filename().string();
+            s.erase(std::remove(s.begin(), s.end(), '\"'), s.end());
+            std::cout << s << "\n";
+        }
     }
-    std::cout << "Hello World!\n";
+    //std::cout << read("files\\message.txt");
+}
+
+std::string read(std::string in)
+{
+    std::ifstream ifs;
+    ifs.open(in);
+    if (!ifs) {
+        ifs.close();
+        return "Read failed. Path: "+in+"\n";
+    }
 
     std::string a;
     std::string bob;
@@ -23,10 +40,5 @@ int main()
         bob.append(a.append("\n"));
     }
     ifs.close();
-    std::cout << bob;
-}
-
-std::string read()
-{
-    return "idk";
+    return bob;
 }
