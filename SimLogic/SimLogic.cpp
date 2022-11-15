@@ -5,10 +5,12 @@
 #include <fstream>
 #include <filesystem>
 #include <string>
+#include <vector>
 
 //interesting discovery: for visual studio, local dir is not the .exe's but the .sln file
 
 std::string read(std::string, std::string);
+int evaluate_expr(std::string);
 
 int main()
 {
@@ -43,8 +45,19 @@ std::string read(std::string in, std::string name)
     std::cout << name << " contents:\n\n";
     while (std::getline(ifs, a)) //when reading from file, space and newline are both used as separators
     {
-        bob.append(a.append("\n"));
+        bob.append(a.append(" = "));
+        bob.append(std::to_string(evaluate_expr(a)));
+        bob.append("\n");
     }
     ifs.close();
     return bob;
+}
+
+int evaluate_expr(std::string line)
+{
+    std::vector<std::string> tokens;
+    int sym_position = line.find("+");
+    int num1 = std::stoi(line.substr(0, sym_position));
+    int num2 = std::stoi(line.substr(sym_position + 1));
+    return num1 + num2;
 }
