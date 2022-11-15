@@ -8,10 +8,11 @@
 
 //interesting discovery: for visual studio, local dir is not the .exe's but the .sln file
 
-std::string read(std::string);
+std::string read(std::string, std::string);
 
 int main()
 {
+    std::cout << "[System]\n";
     for (const auto& file : std::filesystem::directory_iterator("files"))
     {
         if (file.path().extension() == ".txt")
@@ -21,10 +22,14 @@ int main()
             std::cout << s << "\n";
         }
     }
-    //std::cout << read("files\\message.txt");
+
+    std::cout << "\nEnter name of file(no .txt) ";
+    std::string inp;
+    std::cin >> inp;
+    std::cout << read("files\\" + inp + ".txt", inp);
 }
 
-std::string read(std::string in)
+std::string read(std::string in, std::string name)
 {
     std::ifstream ifs;
     ifs.open(in);
@@ -35,6 +40,7 @@ std::string read(std::string in)
 
     std::string a;
     std::string bob;
+    std::cout << name << " contents:\n\n";
     while (std::getline(ifs, a)) //when reading from file, space and newline are both used as separators
     {
         bob.append(a.append("\n"));

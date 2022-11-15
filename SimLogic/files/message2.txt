@@ -1,0 +1,7 @@
+{circA}
+IN:ia,ib
+AND:aa
+OUT:oa
+(ia,ib)->aa
+(aa)->oa
+{/circA}
