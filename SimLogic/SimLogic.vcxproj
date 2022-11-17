@@ -133,6 +133,9 @@
   <ItemGroup>
     <ClCompile Include="SimLogic.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="files\message3.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
