@@ -134,6 +134,8 @@
     <ClCompile Include="SimLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="files\logic.txt" />
+    <Text Include="files\message2.txt" />
     <Text Include="files\message3.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
