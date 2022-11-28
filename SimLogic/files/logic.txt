@@ -1,7 +1,3 @@
-example line: IN:bob,joe,doe !!no spacing(for now)!!
-tokens: "IN:", "bob", "joe", "doe"
-structure: inputSet = {i1,i2} <= for(i<number of inputs) inputSet.push_back("i"+i)
-
 example program:
 {circA}
 IN:in1, in2
@@ -13,15 +9,44 @@ OUT:out1
 
 tokens: "{", "circA", "}"
 find matching {/name} => "{", "/", "circA", "}" <= if no matching closing tag, return immediately
-append new Circuit to Circuit vector: cvec.push_back(new Circuit())
+append new Circuit to Circuit vector: cvec.push_back(new Circuit("circA"))
 next line
 tokens: "IN:", "in1", "in2"
 structure: invec.push_back(new Input("in1")), same for in2
 next line
 tokens: "AND:", "and1", "#2"
-structure: andvecI.push_back(new And("and1"))
+structure: i_andvec.push_back(new And("and1",2)) <= incomplete andvec
 next line
 tokens: "OUT:", "out1"
-structure: outvecI.push_back(new Output("out1"))
+structure: i_outvec.push_back(new Output("out1")) <= incomplete outvec
 next line
-tokens: "(", "in1"
+tokens: "(", "in1", "in2", ")", "->", "and1"
+find "(", find matching ")" and push inputs into temporary invec
+find "->", find component the input set feeds into: "and1"
+search for index of And object with name "and1" and link t_invec inputs: i_andvec.at(0).addInputs(t_invec)
+if the component is complete(all inputs satisfied), remove from i_andvec <= if i_andvec is not empty at end of reading, throw error
+component is complete, remove from i_andvec and push to complete andvec(c_andvec)
+next line
+tokens: "(", "and1", ")", "->", "out1"
+find "(", find matching ")" and push input into temporary invec
+find "->", find component the input set feeds into: "out1"
+search for index of Output object with name "out1" and link t_invec input: i_outvec.at(0).addInputs(t_invec)
+component is complete, remove from i_outvec and push to c_outvec
+
+evaluation:
+through terminal(maybe through GUI text field or buttons later), user will specify which inputs to enable and the output will be printed to stdout(or graph drawing later)
+stdout: "Input components: [in1],[in2] - enter values for these inputs in order"
+user input: 0 <= check if either 0,1,T,t,F,f
+user input: 0
+inputs[0] is 0, set index 0 Input object's value field to 0
+inputs[1] is 0, set index 1 Input object's value field to 0
+for each input, recursively(?) propagate signal until a component is reached which cannot output a valid signal(i.e. one or more signal fields != 0,1)
+all component objects contain a list of objects that they feed into
+output objects have the propagate method, but only to output to stdout
+invec.at(0).propagate() <= feeds into and1(index 0 of m_feedList)
+	->invec[0] calls propagate on m_feedList[0]
+		->m_feedList[0] receives 0, but has one field which is -1(invalid/not set) and returns
+invec.at(1).propagate() <= feeds into and1(index 0 of m_feedList)
+	->invec[1] calls propagate on m_feedList[0]
+		->m_feedList[0] receives 0, all inputs are satisfied and calls propagate on m_feedList[0](out1)
+			->m_feedList[0] receives (0&0 = 0), prints its name + value("out1: 0")
