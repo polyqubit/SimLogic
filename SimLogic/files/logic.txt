@@ -1,0 +1,18 @@
+example line: IN:bob,joe,doe !!no spacing(for now)!!
+tokens: "IN:", "bob", "joe", "doe"
+structure: inputSet = {i1,i2} <= for(i<number of inputs) inputSet.push_back("i"+i)
+
+example program:
+{circA}
+IN:in1, in2
+AND:and1
+OUT:out1
+(in1,in2)->and2
+(and2)->out2
+{/circA}
+
+tokens: "{", "circA", "}"
+find matching {/name} => "{", "/", "circA", "}"
+append new Circuit to Circuit vector: cvec.push_back(new Circuit())
+next line
+tokens: "IN:", "in1", "in2"
