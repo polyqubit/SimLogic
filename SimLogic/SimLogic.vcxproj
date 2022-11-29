@@ -131,12 +131,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Circuit.cpp" />
+    <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="SimLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="files\logic.txt" />
     <Text Include="files\message2.txt" />
     <Text Include="files\message3.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Circuit.h" />
+    <ClInclude Include="Lexer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

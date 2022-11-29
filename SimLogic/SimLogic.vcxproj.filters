@@ -18,6 +18,12 @@
     <ClCompile Include="SimLogic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Circuit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="files\message3.txt">
@@ -29,5 +35,13 @@
     <Text Include="files\logic.txt">
       <Filter>Source Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Circuit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
