@@ -11,7 +11,6 @@
 //interesting discovery: for visual studio, local dir is not the .exe's but the .sln file
 
 std::string read(std::string, std::string);
-void evaluate_expr(std::string);
 
 int main()
 {
@@ -52,9 +51,4 @@ std::string read(std::string in, std::string name)
     }
     ifs.close();
     return bob;
-}
-
-void evaluate_expr(std::string line)
-{
-
 }
