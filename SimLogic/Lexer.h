@@ -20,6 +20,7 @@ class Lexer
 public:
 	Message produce_tokens(std::string);
 	Message read_file(std::string);
+	void output_linevec();
 private:
 	std::vector<std::string> m_linevec;
 };

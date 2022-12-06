@@ -37,3 +37,11 @@ Message Lexer::read_file(std::string in)
     right.message = "OK";
     return right;
 }
+
+void Lexer::output_linevec()
+{
+    for (auto i : m_linevec)
+    {
+        std::cout << i << "\n";
+    }
+}

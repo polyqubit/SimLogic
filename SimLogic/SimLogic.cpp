@@ -31,5 +31,6 @@ int main()
     
     Lexer lex;
     Message test = lex.read_file("files\\"+inp+".txt");
-    std::cout << test.message;
+    std::cout << test.message << "\n";
+    lex.output_linevec();
 }
