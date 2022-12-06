@@ -8,9 +8,9 @@
 #include <vector>
 #include <exception>
 
-//interesting discovery: for visual studio, local dir is not the .exe's but the .sln file
+#include "Lexer.h"
 
-std::string read(std::string, std::string);
+//interesting discovery: for visual studio, local dir is not the .exe's but the .sln file
 
 int main()
 {
@@ -28,27 +28,8 @@ int main()
     std::cout << "\nEnter name of file(no .txt) ";
     std::string inp;
     std::cin >> inp;
-    std::cout << read("files\\" + inp + ".txt", inp);
-}
-
-std::string read(std::string in, std::string name)
-{
-    std::ifstream ifs;
-    ifs.open(in);
-    if (!ifs) {
-        ifs.close();
-        return "Read failed. Path: "+in+"\n";
-    }
-
-    std::string a;
-    std::string bob;
-    std::cout << name << " contents:\n\n";
-    while (std::getline(ifs, a)) //when reading from file, space and newline are both used as separators
-    {
-        bob.append(a.append(" = "));
-        //bob.append(std::to_string(evaluate_expr(a)));
-        bob.append("\n");
-    }
-    ifs.close();
-    return bob;
+    
+    Lexer lex;
+    Message test = lex.read_file("files\\"+inp+".txt");
+    std::cout << test.message;
 }
