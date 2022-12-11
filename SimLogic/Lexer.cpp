@@ -1,4 +1,5 @@
 #include "Lexer.h"
+#include "Circuit.h"
 
 Message Lexer::produce_tokens(std::string in) {
 	char start = in.at(0);
@@ -6,12 +7,25 @@ Message Lexer::produce_tokens(std::string in) {
 	{
 	case '{':
 	{
-		if(in.back()!='}')
+        if (in.back() != '}')
+        {
+            Message wrong;
+            wrong.message = "Circuit header incomplete\n";
+            wrong.incorrect = true;
+            return wrong;
+        }
+        Circuit c(in.substr(1,in.length()-1));
+        m_cvec.push_back(c);
 		break;
 	}
+    case ' ':
+    {
+
+        break;
+    }
 	}
     Message right;
-    right.message = "OK";
+    right.message = "OK\n";
     return right;
 }
 
@@ -34,7 +48,7 @@ Message Lexer::read_file(std::string in)
     }
     ifs.close();
     Message right;
-    right.message = "OK";
+    right.message = "OK\n";
     return right;
 }
 
