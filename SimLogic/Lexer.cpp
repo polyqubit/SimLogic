@@ -14,13 +14,27 @@ Message Lexer::produce_tokens(std::string in) {
             wrong.incorrect = true;
             return wrong;
         }
+        // TODO: make a stack for circuits to see which one is active
         Circuit c(in.substr(1,in.length()-1));
         m_cvec.push_back(c);
 		break;
 	}
-    case ' ':
+    case 'I':
     {
+        if (in.substr(0, in.find(':')) != "IN")
+        {
+            Message wrong;
+            wrong.message = "Unknown token:" + in.substr(0, in.find(':')) +"\n";
+            wrong.incorrect = true;
+            return wrong;
+        }
+        std::string temp = in.substr(in.find(':'),in.length());
+        while (temp.length() > 0)
+        {
+            int comma = temp.find(',');
+            std::string input = temp.substr(0,comma);
 
+        }
         break;
     }
 	}

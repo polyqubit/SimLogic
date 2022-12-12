@@ -1,6 +1,6 @@
 example program:
 {circA}
-IN:in1, in2
+IN:in1,in2
 AND:and1#2
 OUT:out1
 (in1,in2)->and1
