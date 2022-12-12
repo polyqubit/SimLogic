@@ -4,9 +4,13 @@ template <class T>
 class Node
 {
 public:
-	Node(T);
+	Node(T& t)
+	{
+		val = t;
+	}
 	void set_next(Node&);
+	T get_val() const;
 private:
-	T val;
+	T* val;
 	Node* next;
 };
