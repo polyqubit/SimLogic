@@ -8,8 +8,18 @@ public:
 	{
 		val = t;
 	}
-	void set_next(Node&);
-	T get_val() const;
+	void set_next(Node& t)
+	{
+		next = t;
+	}
+	Node* get_next()
+	{
+		return next;
+	}
+	T get_val() const
+	{
+		return val;
+	}
 private:
 	T* val;
 	Node* next;

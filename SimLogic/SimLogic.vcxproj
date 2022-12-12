@@ -133,9 +133,7 @@
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
     <ClCompile Include="Lexer.cpp" />
-    <ClCompile Include="Node.cpp" />
     <ClCompile Include="SimLogic.cpp" />
-    <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="files\logic.txt" />
