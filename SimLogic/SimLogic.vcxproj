@@ -133,7 +133,9 @@
   <ItemGroup>
     <ClCompile Include="Circuit.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="SimLogic.cpp" />
+    <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="files\logic.txt" />
@@ -143,6 +145,8 @@
   <ItemGroup>
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="Lexer.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

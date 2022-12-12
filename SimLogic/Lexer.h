@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <exception>
+#include "Circuit.h"
 
 struct Message {
 	std::string message = "";
