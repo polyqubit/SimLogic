@@ -25,7 +25,6 @@ public:
 	void output_linevec();
 private:
 	std::vector<std::string> m_linevec;
-	std::vector<Circuit> m_cvec;
-	std::stack<Circuit> m_cstack;
+	std::vector<Circuit*> m_cvec;
+	std::stack<Circuit*> m_cstack;
 };
-
