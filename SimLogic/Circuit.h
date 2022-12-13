@@ -9,6 +9,7 @@ public:
 	{
 		name = n;
 	}
+	void add_component();
 private:
 	std::string name;
 };

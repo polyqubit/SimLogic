@@ -17,6 +17,7 @@ Message Lexer::produce_tokens(std::string in) {
         // TODO: make a stack for circuits to see which one is active
         Circuit c(in.substr(1,in.length()-1));
         m_cvec.push_back(c);
+        m_cstack.push(c);
 		break;
 	}
     case 'I':
@@ -28,12 +29,12 @@ Message Lexer::produce_tokens(std::string in) {
             wrong.incorrect = true;
             return wrong;
         }
-        std::string temp = in.substr(in.find(':'),in.length());
+        std::string temp = in.substr(in.find(':')+1,in.length());
         while (temp.length() > 0)
         {
             int comma = temp.find(',');
             std::string input = temp.substr(0,comma);
-
+            m_cstack.top
         }
         break;
     }

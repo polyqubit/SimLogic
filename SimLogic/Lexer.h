@@ -7,6 +7,7 @@
 #include <filesystem>
 #include <string>
 #include <vector>
+#include <stack>
 #include <exception>
 #include "Circuit.h"
 
@@ -25,5 +26,6 @@ public:
 private:
 	std::vector<std::string> m_linevec;
 	std::vector<Circuit> m_cvec;
+	std::stack<Circuit> m_cstack;
 };
 

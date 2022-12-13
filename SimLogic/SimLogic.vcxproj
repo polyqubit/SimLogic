@@ -131,7 +131,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Circuit.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="SimLogic.cpp" />
   </ItemGroup>
@@ -142,9 +141,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Circuit.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Lexer.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="Stack.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
