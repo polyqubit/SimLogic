@@ -51,11 +51,11 @@ Message Lexer::produce_tokens(std::string in) {
         std::string temp = in.substr(in.find(':')+1,in.length());
         while (temp.length() > 0)
         {
-            int comma = temp.find(',');
+            int comma = temp.find(','); //search for # later
             std::string input = temp.substr(0,comma);
-            And a(input);
+            /*And a(input);
             m_cstack.top()->add_component(&a);
-            temp = temp.substr(comma + 1);
+            temp = temp.substr(comma + 1);*/
         }
         break;
     }

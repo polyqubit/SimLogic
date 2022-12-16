@@ -37,26 +37,28 @@ private:
 class And : public Component
 {
 public:
-	And(std::string s) : Component(s)
+	And(std::string s, int n) : Component(s)
 	{
+		limit = n;
 	}
 	void propagate(bool pass)
 	{
-		if (m_boolvec.size() == m_compvec.size())
+		if (c == limit)
 		{
 			real_propagate();
 		}
 		else
 		{
-			m_boolvec.push_back(pass);
+			m_boolarray[c] = pass;
+			c++;
 		}
 	}
 	void real_propagate()
 	{
 		bool store = true;
-		for (bool i : m_boolvec)
+		for (int i = 0; i < limit; ++i)
 		{
-			if (!i)
+			if (!m_boolarray[i])
 			{
 				store = false;
 				break;
@@ -73,33 +75,40 @@ public:
 	}
 private:
 	std::vector<Component*> m_compvec;
-	std::vector<bool> m_boolvec;
+	bool m_boolarray[8] = { false };
+	int limit;
+	int c;
 };
 
 class Or : public Component
 {
 public:
-	Or(std::string s) : Component(s)
+	Or(std::string s, int n) : Component(s)
 	{
+		limit = n;
 	}
 	void propagate(bool pass)
 	{
-		if (m_boolvec.size() == m_compvec.size())
+		if (c == limit)
 		{
 			real_propagate();
 		}
 		else
 		{
-			m_boolvec.push_back(pass);
+			m_boolarray[c] = pass;
+			c++;
 		}
 	}
 	void real_propagate()
 	{
 		bool store = false;
-		for (bool i : m_boolvec)
+		for (int i = 0; i < limit; ++i)
 		{
-			if (i)
+			if (m_boolarray[i])
+			{
+				store = true;
 				break;
+			}
 		}
 		for (auto& i : m_compvec)
 		{
@@ -112,7 +121,45 @@ public:
 	}
 private:
 	std::vector<Component*> m_compvec;
-	std::vector<bool> m_boolvec;
+	bool m_boolarray[8] = { false };
+	int limit;
+	int c;
+};
+
+class Xor : public Component
+{
+public:
+	Xor(std::string s) : Component(s)
+	{
+	}
+	void propagate(bool pass)
+	{
+		if (c == 2)
+		{
+			real_propagate();
+		}
+		else
+		{
+			m_boolarray[c] = pass;
+		}
+	}
+	void real_propagate()
+	{
+		bool store = (m_boolarray[0] || m_boolarray[1])
+				   &&(!m_boolarray[0] || !m_boolarray[1]);
+		for (auto& i : m_compvec)
+		{
+			i->propagate(store);
+		}
+	}
+	void add_child(Component* c)
+	{
+		m_compvec.push_back(c);
+	}
+private:
+	std::vector<Component*> m_compvec;
+	bool* m_boolarray = new bool[2];
+	int c = 0;
 };
 
 class Not : public Component
