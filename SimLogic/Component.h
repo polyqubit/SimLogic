@@ -16,6 +16,9 @@ private:
 class Input : public Component
 {
 public:
+	Input(std::string s) : Component(s)
+	{
+	}
 	void propagate(bool pass)
 	{
 		for (auto& i : m_compvec)
@@ -34,6 +37,9 @@ private:
 class And : public Component
 {
 public:
+	And(std::string s) : Component(s)
+	{
+	}
 	void propagate(bool pass)
 	{
 		if (m_boolvec.size() == m_compvec.size())
@@ -73,6 +79,9 @@ private:
 class Or : public Component
 {
 public:
+	Or(std::string s) : Component(s)
+	{
+	}
 	void propagate(bool pass)
 	{
 		if (m_boolvec.size() == m_compvec.size())
@@ -109,6 +118,9 @@ private:
 class Not : public Component
 {
 public:
+	Not(std::string s) : Component(s)
+	{
+	}
 	void propagate(bool pass)
 	{
 		for (auto& i : m_compvec)
@@ -127,6 +139,9 @@ private:
 class Output : public Component
 {
 public:
+	Output(std::string s) : Component(s)
+	{
+	}
 	void propagate(bool pass)
 	{
 		if (pass)

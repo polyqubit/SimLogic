@@ -14,7 +14,6 @@ Message Lexer::produce_tokens(std::string in) {
             wrong.incorrect = true;
             return wrong;
         }
-        // TODO: make a stack for circuits to see which one is active
         Circuit c(in.substr(1,in.length()-1));
         m_cvec.push_back(&c);
         m_cstack.push(&c);
@@ -34,8 +33,29 @@ Message Lexer::produce_tokens(std::string in) {
         {
             int comma = temp.find(',');
             std::string input = temp.substr(0,comma);
-            Component c("abc");
-            m_cstack.top()->add_component(&c);
+            Input i(input);
+            m_cstack.top()->add_component(&i);
+            temp = temp.substr(comma+1);
+        }
+        break;
+    }
+    case 'A':
+    {
+        if (in.substr(0, in.find(':')) != "AND")
+        {
+            Message wrong;
+            wrong.message = "Unknown token:" + in.substr(0, in.find(':')) +"\n";
+            wrong.incorrect = true;
+            return wrong;
+        }
+        std::string temp = in.substr(in.find(':')+1,in.length());
+        while (temp.length() > 0)
+        {
+            int comma = temp.find(',');
+            std::string input = temp.substr(0,comma);
+            And a(input);
+            m_cstack.top()->add_component(&a);
+            temp = temp.substr(comma + 1);
         }
         break;
     }
