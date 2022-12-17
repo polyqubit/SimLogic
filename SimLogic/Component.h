@@ -13,6 +13,10 @@ public:
 	{
 		return m_name;
 	}
+	virtual std::string get_type()
+	{
+		return "Component";
+	}
 private:
 	std::string m_name;
 };
@@ -33,6 +37,10 @@ public:
 	void add_child(Component* c)
 	{
 		m_compvec.push_back(c);
+	}
+	std::string get_type()
+	{
+		return "Input";
 	}
 private:
 	std::vector<Component*> m_compvec;
@@ -76,6 +84,10 @@ public:
 	void add_child(Component* c)
 	{
 		m_compvec.push_back(c);
+	}
+	std::string get_type()
+	{
+		return "And";
 	}
 private:
 	std::vector<Component*> m_compvec;
@@ -123,6 +135,10 @@ public:
 	{
 		m_compvec.push_back(c);
 	}
+	std::string get_type()
+	{
+		return "Or";
+	}
 private:
 	std::vector<Component*> m_compvec;
 	bool m_boolarray[8] = { false };
@@ -160,6 +176,10 @@ public:
 	{
 		m_compvec.push_back(c);
 	}
+	std::string get_type()
+	{
+		return "Xor";
+	}
 private:
 	std::vector<Component*> m_compvec;
 	bool* m_boolarray = new bool[2];
@@ -183,6 +203,10 @@ public:
 	{
 		m_compvec.push_back(c);
 	}
+	std::string get_type()
+	{
+		return "Not";
+	}
 private:
 	std::vector<Component*> m_compvec;
 };
@@ -203,6 +227,10 @@ public:
 	int get_state()
 	{
 		return state;
+	}
+	std::string get_type()
+	{
+		return "Output";
 	}
 private:
 	std::vector<Component*> m_compvec;
