@@ -53,6 +53,9 @@ Message Lexer::produce_tokens(std::string in) {
         {
             int comma = temp.find(','); //search for # later
             std::string input = temp.substr(0,comma);
+            std::string name = input.substr(0, input.find('#'));
+            int num = std::stoi(input.substr(input.find('#') + 1));
+
             /*And a(input);
             m_cstack.top()->add_component(&a);
             temp = temp.substr(comma + 1);*/
