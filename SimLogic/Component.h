@@ -9,6 +9,10 @@ public:
 		m_name = s;
 	}
 	void propagate(bool);
+	std::string get_name()
+	{
+		return m_name;
+	}
 private:
 	std::string m_name;
 };
@@ -146,7 +150,7 @@ public:
 	void real_propagate()
 	{
 		bool store = (m_boolarray[0] || m_boolarray[1])
-				   &&(!m_boolarray[0] || !m_boolarray[1]);
+			&& (!m_boolarray[0] || !m_boolarray[1]);
 		for (auto& i : m_compvec)
 		{
 			i->propagate(store);

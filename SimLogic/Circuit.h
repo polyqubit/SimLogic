@@ -15,6 +15,17 @@ public:
 	{
 		m_compvec.push_back(c);
 	}
+	Component* find_component(std::string s)
+	{
+		for (Component* c : m_compvec)
+		{
+			if (c->get_name() == s)
+			{
+				return c;
+			}
+		}
+		return NULL;
+	}
 private:
 	std::string m_name;
 	std::vector<Component*> m_compvec;

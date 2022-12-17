@@ -14,23 +14,23 @@
 
 int main()
 {
-    std::cout << "[System]\n";
-    for (const auto& file : std::filesystem::directory_iterator("files"))
-    {
-        if (file.path().extension() == ".txt")
-        {
-            std::string s = file.path().filename().string();
-            s.erase(std::remove(s.begin(), s.end(), '\"'), s.end());
-            std::cout << s << "\n";
-        }
-    }
+	std::cout << "[System]\n";
+	for (const auto& file : std::filesystem::directory_iterator("files"))
+	{
+		if (file.path().extension() == ".txt")
+		{
+			std::string s = file.path().filename().string();
+			s.erase(std::remove(s.begin(), s.end(), '\"'), s.end());
+			std::cout << s << "\n";
+		}
+	}
 
-    std::cout << "\nEnter name of file(no .txt) ";
-    std::string inp;
-    std::cin >> inp;
-    
-    Lexer lex;
-    Message test = lex.read_file("files\\"+inp+".txt");
-    std::cout << test.message << "\n";
-    lex.output_linevec();
+	std::cout << "\nEnter name of file(no .txt) ";
+	std::string inp;
+	std::cin >> inp;
+
+	Lexer lex;
+	Message test = lex.read_file("files\\" + inp + ".txt");
+	std::cout << test.message << "\n";
+	lex.output_linevec();
 }
