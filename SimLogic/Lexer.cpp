@@ -176,7 +176,7 @@ Message Lexer::produce_tokens(std::string in) {
 			return wrong;
 		}
 		std::string temp = in.substr(1, in.find(')'));
-		std::vector<Component*> tempvec;
+		std::vector<Component*> tempcvec;
 		while (temp.length() > 0)
 		{
 			std::string input;
@@ -189,11 +189,10 @@ Message Lexer::produce_tokens(std::string in) {
 				std::string input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
-			std::string name = input.substr(0, input.find('#'));
-			if(m_cstack.top()->find_component(name)==NULL)
+			if(m_cstack.top()->find_component(input)==NULL)
 			{
 				Message wrong;
-				wrong.message = "Component not found: " + name + "\n";
+				wrong.message = "Component not found: " + input + "\n";
 				wrong.incorrect = true;
 				return wrong;
 			}
