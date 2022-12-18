@@ -1,6 +1,9 @@
 #include "Lexer.h"
 #include "Circuit.h"
 
+// **note on substr: s.substr(start_idx,length) not s.substr(start_idx,end_idx)**
+// to get start -> end: s.substr(start_idx,end_idx-start_idx+1)
+
 Message Lexer::produce_tokens(std::string in) {
 	if (in.length() < 2)
 	{
@@ -27,7 +30,7 @@ Message Lexer::produce_tokens(std::string in) {
 			break;
 		}
 		//std::shared_ptr<Circuit> c(new Circuit(in.substr(1, in.length() - 1)));
-		auto c = std::make_shared<Circuit>(in.substr(1, in.length() - 1));
+		auto c = std::make_shared<Circuit>(in.substr(1, in.length() - 2));
 		m_cvec.push_back(c);
 		m_cstack.push(c);
 		std::cout << "{ ok";
@@ -277,9 +280,10 @@ Message Lexer::read_file(std::string in)
 
 void Lexer::output_linevec()
 {
+	int c = 0;
 	for (auto i : m_linevec)
 	{
-		std::cout << i << "\n";
+		std::cout << ++c << ": " << i << "\n";
 	}
 }
 
