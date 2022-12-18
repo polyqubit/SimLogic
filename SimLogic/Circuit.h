@@ -17,7 +17,7 @@ public:
 	{
 		m_compvec.push_back(c);
 	}
-	std::unique_ptr<Component> find_component(std::string s)
+	std::shared_ptr<Component> find_component(std::string s) //compolete transition to shared_prt later
 	{
 		for (auto& c : m_compvec)
 		{
