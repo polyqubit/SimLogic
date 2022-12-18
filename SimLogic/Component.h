@@ -9,6 +9,7 @@ public:
 	{
 		m_name = s;
 	}
+	Component(Component&) = default;
 	void propagate(bool)
 	{
 	}
@@ -24,7 +25,7 @@ public:
 		return "Component";
 	}
 private:
-	std::string m_name;
+	std::string m_name = "";
 };
 
 class Input : public Component
@@ -33,6 +34,7 @@ public:
 	Input(std::string s) : Component(s)
 	{
 	}
+	Input(Input&) = default;
 	void propagate(bool pass)
 	{
 		for (auto& i : m_compvec)
@@ -59,9 +61,8 @@ public:
 	{
 		if (n < 8)
 			limit = n;
-		else
-			limit = 8;
 	}
+	And(And&) = default;
 	void propagate(bool pass)
 	{
 		if (c == limit)
@@ -101,8 +102,8 @@ public:
 private:
 	std::vector<std::unique_ptr<Component>> m_compvec;
 	bool m_boolarray[8] = { false };
-	int limit;
-	int c;
+	int limit = 8;
+	int c = 0;
 };
 
 class Or : public Component
@@ -112,9 +113,8 @@ public:
 	{
 		if (n < 8)
 			limit = n;
-		else
-			limit = 8;
 	}
+	Or(Or&) = default;
 	void propagate(bool pass)
 	{
 		if (c == limit)
@@ -154,8 +154,8 @@ public:
 private:
 	std::vector<std::unique_ptr<Component>> m_compvec;
 	bool m_boolarray[8] = { false };
-	int limit;
-	int c;
+	int limit = 8;
+	int c = 0;
 };
 
 class Xor : public Component
@@ -164,6 +164,7 @@ public:
 	Xor(std::string s) : Component(s)
 	{
 	}
+	Xor(Xor&) = default;
 	void propagate(bool pass)
 	{
 		if (c == 2)
@@ -204,6 +205,7 @@ public:
 	Not(std::string s) : Component(s)
 	{
 	}
+	Not(Not&) = default;
 	void propagate(bool pass)
 	{
 		for (auto& i : m_compvec)
@@ -229,6 +231,7 @@ public:
 	Output(std::string s) : Component(s)
 	{
 	}
+	Output(Output&) = default;
 	void propagate(bool pass)
 	{
 		if (pass)
