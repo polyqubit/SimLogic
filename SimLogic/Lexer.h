@@ -27,6 +27,6 @@ public:
 	void output_circ();
 private:
 	std::vector<std::string> m_linevec;
-	std::vector<std::unique_ptr<Circuit>> m_cvec;
-	std::stack<std::unique_ptr<Circuit>> m_cstack;
+	std::vector<std::shared_ptr<Circuit>> m_cvec;
+	std::stack<std::shared_ptr<Circuit>> m_cstack;
 };

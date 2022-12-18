@@ -13,17 +13,17 @@ public:
 	}
 	Circuit(Circuit&) = default;
 	~Circuit() = default;
-	void add_component(std::unique_ptr<Component> c)
+	void add_component(std::shared_ptr<Component> c)
 	{
-		m_compvec.push_back(c);
+		m_compvec.push_back(std::move(c));
 	}
-	std::shared_ptr<Component> find_component(std::string s) //compolete transition to shared_prt later
+	std::shared_ptr<Component> find_component(std::string s)
 	{
 		for (auto& c : m_compvec)
 		{
 			if (c->get_name() == s)
 			{
-				return std::move(c);
+				return c;
 			}
 		}
 		return NULL;
@@ -37,6 +37,6 @@ public:
 	}
 private:
 	std::string m_name = "";
-	std::vector<std::unique_ptr<Component>> m_compvec;
+	std::vector<std::shared_ptr<Component>> m_compvec;
 };
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 
+//todo: move circuit into component to allow for circuits within circuits
 class Component
 {
 public:
@@ -14,7 +15,7 @@ public:
 	void propagate(bool)
 	{
 	}
-	void add_child(std::unique_ptr<Component>)
+	void add_child(std::shared_ptr<Component>)
 	{
 	}
 	std::string get_name()
@@ -44,7 +45,7 @@ public:
 			i->propagate(pass);
 		}
 	}
-	void add_child(std::unique_ptr<Component> c)
+	void add_child(std::shared_ptr<Component> c)
 	{
 		m_compvec.push_back(std::move(c));
 	}
@@ -53,7 +54,7 @@ public:
 		return "Input";
 	}
 private:
-	std::vector<std::unique_ptr<Component>> m_compvec;
+	std::vector<std::shared_ptr<Component>> m_compvec;
 };
 
 class And : public Component
@@ -94,7 +95,7 @@ public:
 			i->propagate(store);
 		}
 	}
-	void add_child(std::unique_ptr<Component> c)
+	void add_child(std::shared_ptr<Component> c)
 	{
 		m_compvec.push_back(std::move(c));
 	}
@@ -103,7 +104,7 @@ public:
 		return "And";
 	}
 private:
-	std::vector<std::unique_ptr<Component>> m_compvec;
+	std::vector<std::shared_ptr<Component>> m_compvec;
 	bool m_boolarray[8] = { false };
 	int limit = 8;
 	int c = 0;
@@ -147,7 +148,7 @@ public:
 			i->propagate(store);
 		}
 	}
-	void add_child(std::unique_ptr<Component> c)
+	void add_child(std::shared_ptr<Component> c)
 	{
 		m_compvec.push_back(std::move(c));
 	}
@@ -156,7 +157,7 @@ public:
 		return "Or";
 	}
 private:
-	std::vector<std::unique_ptr<Component>> m_compvec;
+	std::vector<std::shared_ptr<Component>> m_compvec;
 	bool m_boolarray[8] = { false };
 	int limit = 8;
 	int c = 0;
@@ -190,7 +191,7 @@ public:
 			i->propagate(store);
 		}
 	}
-	void add_child(std::unique_ptr<Component> c)
+	void add_child(std::shared_ptr<Component> c)
 	{
 		m_compvec.push_back(std::move(c));
 	}
@@ -199,7 +200,7 @@ public:
 		return "Xor";
 	}
 private:
-	std::vector<std::unique_ptr<Component>> m_compvec;
+	std::vector<std::shared_ptr<Component>> m_compvec;
 	bool* m_boolarray = new bool[2];
 	int c = 0;
 };
@@ -219,7 +220,7 @@ public:
 			i->propagate(!pass);
 		}
 	}
-	void add_child(std::unique_ptr<Component> c)
+	void add_child(std::shared_ptr<Component> c)
 	{
 		m_compvec.push_back(std::move(c));
 	}
@@ -228,7 +229,7 @@ public:
 		return "Not";
 	}
 private:
-	std::vector<std::unique_ptr<Component>> m_compvec;
+	std::vector<std::shared_ptr<Component>> m_compvec;
 };
 
 class Output : public Component

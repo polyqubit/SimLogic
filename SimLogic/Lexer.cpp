@@ -26,8 +26,8 @@ Message Lexer::produce_tokens(std::string in) {
 			m_cstack.pop();
 			break;
 		}
-		std::unique_ptr<Circuit> c(new Circuit(in.substr(1, in.length() - 1)));
-		m_cvec.push_back(c); //std::copy()
+		std::shared_ptr<Circuit> c(new Circuit(in.substr(1, in.length() - 1)));
+		m_cvec.push_back(c);
 		m_cstack.push(c);
 		break;
 	}
@@ -53,8 +53,8 @@ Message Lexer::produce_tokens(std::string in) {
 				std::string input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
-			std::unique_ptr<Component> i(new Input(input));
-			m_cstack.top()->add_component(std::move(i));
+			std::shared_ptr<Component> i(new Input(input));
+			m_cstack.top()->add_component(i);
 		}
 		break;
 	}
@@ -89,8 +89,8 @@ Message Lexer::produce_tokens(std::string in) {
 			}
 			std::string name = input.substr(0, input.find('#'));
 			int num = std::stoi(input.substr(input.find('#') + 1));
-			std::unique_ptr<Component> a(new And(name, num));
-			m_cstack.top()->add_component(std::move(a));
+			std::shared_ptr<Component> a(new And(name, num));
+			m_cstack.top()->add_component(a);
 		}
 		break;
 	}
@@ -129,8 +129,8 @@ Message Lexer::produce_tokens(std::string in) {
 				}
 				std::string name = input.substr(0, input.find('#'));
 				int num = std::stoi(input.substr(input.find('#') + 1));
-				std::unique_ptr<Component> o(new Or(name, num));
-				m_cstack.top()->add_component(std::move(o));
+				std::shared_ptr<Component> o(new Or(name, num));
+				m_cstack.top()->add_component(o);
 			}
 			break;
 		}
@@ -156,8 +156,8 @@ Message Lexer::produce_tokens(std::string in) {
 					std::string input = temp.substr(0, temp.find(','));
 					temp = temp.substr(temp.find(',') + 1);
 				}
-				std::unique_ptr<Component> o(new Output(input));
-				m_cstack.top()->add_component(std::move(o));
+				std::shared_ptr<Component> o(new Output(input));
+				m_cstack.top()->add_component(o);
 			}
 			break;
 		}
@@ -174,7 +174,7 @@ Message Lexer::produce_tokens(std::string in) {
 			return wrong;
 		}
 		std::string temp = in.substr(1, in.find(')'));
-		std::vector<std::unique_ptr<Component>> tempcvec;
+		std::vector<std::shared_ptr<Component>> tempcvec;
 		while (temp.length() > 0)
 		{
 			std::string input;
@@ -187,7 +187,7 @@ Message Lexer::produce_tokens(std::string in) {
 				std::string input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
-			std::unique_ptr<Component> finding = m_cstack.top()->find_component(input); //check for correctness?
+			std::shared_ptr<Component> finding = m_cstack.top()->find_component(input); //check for correctness?
 			if (finding == NULL)
 			{
 				Message wrong;
@@ -205,7 +205,7 @@ Message Lexer::produce_tokens(std::string in) {
 			return wrong;
 		}
 		std::string into = in.substr(in.find('>') + 1);
-		std::unique_ptr<Component> finding = m_cstack.top()->find_component(into); //same here(maybe std move)
+		std::shared_ptr<Component> finding = m_cstack.top()->find_component(into);
 		if (finding == NULL)
 		{
 			Message wrong;
@@ -215,7 +215,7 @@ Message Lexer::produce_tokens(std::string in) {
 		}
 		for (auto& c : tempcvec)
 		{
-			c->add_child(std::move(finding));
+			c->add_child(finding);
 		}
 		break;
 	}
@@ -250,9 +250,11 @@ Message Lexer::read_file(std::string in)
 		m_linevec.push_back(a);
 	}
 	ifs.close();
+	int c = 0;
 	for (std::string s : m_linevec)
 	{
 		produce_tokens(s);
+		std::cout << ++c << std::endl;
 	}
 	Message right;
 	right.message = "OK\n";
