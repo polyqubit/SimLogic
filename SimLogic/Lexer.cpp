@@ -45,7 +45,7 @@ Message Lexer::produce_tokens(std::string in) {
 			wrong.incorrect = true;
 			return wrong;
 		}
-		std::string temp = in.substr(in.find(':') + 1, in.length());
+		std::string temp = in.substr(in.find(':') + 1);
 		while (temp != "")
 		{
 			std::string input;
@@ -184,7 +184,7 @@ Message Lexer::produce_tokens(std::string in) {
 			wrong.incorrect = true;
 			return wrong;
 		}
-		std::string temp = in.substr(1, in.find(')'));
+		std::string temp = in.substr(1, in.find(')') - 1);
 		std::vector<std::shared_ptr<Component>> tempcvec;
 		while (temp != "")
 		{
