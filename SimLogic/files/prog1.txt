@@ -1,6 +1,6 @@
 {circA}
 IN:ia,ib
-AND:aa
+AND:aa#2
 OUT:oa
 (ia,ib)->aa
 (aa)->oa

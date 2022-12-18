@@ -26,9 +26,11 @@ Message Lexer::produce_tokens(std::string in) {
 			m_cstack.pop();
 			break;
 		}
-		std::shared_ptr<Circuit> c(new Circuit(in.substr(1, in.length() - 1)));
+		//std::shared_ptr<Circuit> c(new Circuit(in.substr(1, in.length() - 1)));
+		auto c = std::make_shared<Circuit>(in.substr(1, in.length() - 1));
 		m_cvec.push_back(c);
 		m_cstack.push(c);
+		std::cout << "{ ok";
 		break;
 	}
 	case 'I':
@@ -47,15 +49,17 @@ Message Lexer::produce_tokens(std::string in) {
 			if (temp.find(',') == std::string::npos)
 			{
 				std::string input = temp;
+				temp = "";
 			}
 			else
 			{
 				std::string input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
-			std::shared_ptr<Component> i(new Input(input));
-			m_cstack.top()->add_component(i);
+			//std::shared_ptr<Component> i(new Input(input));
+			m_cstack.top()->add_component(std::make_shared<Input>(input));
 		}
+		std::cout << "inp ok";
 		break;
 	}
 	case 'A':
@@ -74,6 +78,7 @@ Message Lexer::produce_tokens(std::string in) {
 			if (temp.find(',') == std::string::npos)
 			{
 				std::string input = temp;
+				temp = "";
 			}
 			else
 			{
@@ -89,9 +94,9 @@ Message Lexer::produce_tokens(std::string in) {
 			}
 			std::string name = input.substr(0, input.find('#'));
 			int num = std::stoi(input.substr(input.find('#') + 1));
-			std::shared_ptr<Component> a(new And(name, num));
-			m_cstack.top()->add_component(a);
+			m_cstack.top()->add_component(std::make_shared<And>(name, num));
 		}
+		std::cout << "and ok";
 		break;
 	}
 	case 'O':
@@ -114,6 +119,7 @@ Message Lexer::produce_tokens(std::string in) {
 				if (temp.find(',') == std::string::npos)
 				{
 					std::string input = temp;
+					temp = "";
 				}
 				else
 				{
@@ -129,8 +135,7 @@ Message Lexer::produce_tokens(std::string in) {
 				}
 				std::string name = input.substr(0, input.find('#'));
 				int num = std::stoi(input.substr(input.find('#') + 1));
-				std::shared_ptr<Component> o(new Or(name, num));
-				m_cstack.top()->add_component(o);
+				m_cstack.top()->add_component(std::make_shared<Or>(name, num));
 			}
 			break;
 		}
@@ -150,20 +155,21 @@ Message Lexer::produce_tokens(std::string in) {
 				if (temp.find(',') == std::string::npos)
 				{
 					std::string input = temp;
+					temp = "";
 				}
 				else
 				{
 					std::string input = temp.substr(0, temp.find(','));
 					temp = temp.substr(temp.find(',') + 1);
 				}
-				std::shared_ptr<Component> o(new Output(input));
-				m_cstack.top()->add_component(o);
+				m_cstack.top()->add_component(std::make_shared<Output>(input));
 			}
 			break;
 		}
 		}
 		break;
 	}
+	//at some point add Xor
 	case '(':
 	{
 		if (in.find(')') == std::string::npos)
@@ -181,13 +187,14 @@ Message Lexer::produce_tokens(std::string in) {
 			if (temp.find(',') == std::string::npos)
 			{
 				std::string input = temp;
+				temp = "";
 			}
 			else
 			{
 				std::string input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
-			std::shared_ptr<Component> finding = m_cstack.top()->find_component(input); //check for correctness?
+			std::shared_ptr<Component> finding = m_cstack.top()->find_component(input); // Lexer does not own this component
 			if (finding == NULL)
 			{
 				Message wrong;
@@ -195,7 +202,7 @@ Message Lexer::produce_tokens(std::string in) {
 				wrong.incorrect = true;
 				return wrong;
 			}
-			tempcvec.push_back(finding); //std::copy()
+			tempcvec.push_back(finding);
 		}
 		if (in.find("->") == std::string::npos)
 		{
@@ -253,7 +260,11 @@ Message Lexer::read_file(std::string in)
 	int c = 0;
 	for (std::string s : m_linevec)
 	{
-		produce_tokens(s);
+		Message temp = produce_tokens(s);
+		if (temp.incorrect)
+		{
+			return temp;
+		}
 		std::cout << ++c << std::endl;
 	}
 	Message right;
