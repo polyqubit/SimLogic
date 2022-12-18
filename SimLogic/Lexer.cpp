@@ -43,17 +43,17 @@ Message Lexer::produce_tokens(std::string in) {
 			return wrong;
 		}
 		std::string temp = in.substr(in.find(':') + 1, in.length());
-		while (temp.length() > 0)
+		while (temp != "")
 		{
 			std::string input;
 			if (temp.find(',') == std::string::npos)
 			{
-				std::string input = temp;
+				input = temp;
 				temp = "";
 			}
 			else
 			{
-				std::string input = temp.substr(0, temp.find(','));
+				input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
 			//std::shared_ptr<Component> i(new Input(input));
@@ -71,24 +71,24 @@ Message Lexer::produce_tokens(std::string in) {
 			wrong.incorrect = true;
 			return wrong;
 		}
-		std::string temp = in.substr(in.find(':') + 1, in.length());
-		while (temp.length() > 0)
+		std::string temp = in.substr(in.find(':') + 1);
+		while (temp != "")
 		{
 			std::string input;
 			if (temp.find(',') == std::string::npos)
 			{
-				std::string input = temp;
+				input = temp;
 				temp = "";
 			}
 			else
 			{
-				std::string input = temp.substr(0, temp.find(','));
+				input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
 			if ((input.find('#') == std::string::npos) || (input.find('#') == input.length() - 1))
 			{
 				Message wrong;
-				wrong.message = "Missing input identifier for gate AND: " + in + "\n";
+				wrong.message = "Missing input identifier for gate AND: " + input + "\n";
 				wrong.incorrect = true;
 				return wrong;
 			}
@@ -112,18 +112,18 @@ Message Lexer::produce_tokens(std::string in) {
 				wrong.incorrect = true;
 				return wrong;
 			}
-			std::string temp = in.substr(in.find(':') + 1, in.length());
-			while (temp.length() > 0)
+			std::string temp = in.substr(in.find(':') + 1);
+			while (temp != "")
 			{
 				std::string input;
 				if (temp.find(',') == std::string::npos)
 				{
-					std::string input = temp;
+					input = temp;
 					temp = "";
 				}
 				else
 				{
-					std::string input = temp.substr(0, temp.find(','));
+					input = temp.substr(0, temp.find(','));
 					temp = temp.substr(temp.find(',') + 1);
 				}
 				if ((input.find('#') == std::string::npos) || (input.find('#') == input.length() - 1))
@@ -137,6 +137,7 @@ Message Lexer::produce_tokens(std::string in) {
 				int num = std::stoi(input.substr(input.find('#') + 1));
 				m_cstack.top()->add_component(std::make_shared<Or>(name, num));
 			}
+			std::cout << "or ok";
 			break;
 		}
 		case 'U':
@@ -149,21 +150,22 @@ Message Lexer::produce_tokens(std::string in) {
 				return wrong;
 			}
 			std::string temp = in.substr(in.find(':') + 1, in.length());
-			while (temp.length() > 0)
+			while (temp != "")
 			{
 				std::string input;
 				if (temp.find(',') == std::string::npos)
 				{
-					std::string input = temp;
+					input = temp;
 					temp = "";
 				}
 				else
 				{
-					std::string input = temp.substr(0, temp.find(','));
+					input = temp.substr(0, temp.find(','));
 					temp = temp.substr(temp.find(',') + 1);
 				}
 				m_cstack.top()->add_component(std::make_shared<Output>(input));
 			}
+			std::cout << "out ok";
 			break;
 		}
 		}
@@ -181,17 +183,17 @@ Message Lexer::produce_tokens(std::string in) {
 		}
 		std::string temp = in.substr(1, in.find(')'));
 		std::vector<std::shared_ptr<Component>> tempcvec;
-		while (temp.length() > 0)
+		while (temp != "")
 		{
 			std::string input;
 			if (temp.find(',') == std::string::npos)
 			{
-				std::string input = temp;
+				input = temp;
 				temp = "";
 			}
 			else
 			{
-				std::string input = temp.substr(0, temp.find(','));
+				input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
 			std::shared_ptr<Component> finding = m_cstack.top()->find_component(input); // Lexer does not own this component
@@ -224,6 +226,7 @@ Message Lexer::produce_tokens(std::string in) {
 		{
 			c->add_child(finding);
 		}
+		std::cout << "( ok";
 		break;
 	}
 	default:
