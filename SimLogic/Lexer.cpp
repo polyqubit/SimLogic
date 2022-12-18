@@ -26,9 +26,10 @@ Message Lexer::produce_tokens(std::string in) {
 			m_cstack.pop();
 			break;
 		}
-		Circuit c(in.substr(1, in.length() - 1));
-		m_cvec.push_back(&c);
-		m_cstack.push(&c);
+		//Circuit c(in.substr(1, in.length() - 1));
+		std::unique_ptr<Circuit> c(new Circuit(in.substr(1, in.length() - 1)));
+		m_cvec.push_back(std::move(c));
+		m_cstack.push(std::move(c));
 		break;
 	}
 	case 'I':

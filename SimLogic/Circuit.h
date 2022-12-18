@@ -11,30 +11,30 @@ public:
 	{
 		m_name = n;
 	}
-	void add_component(Component* c)
+	void add_component(std::unique_ptr<Component> c)
 	{
 		m_compvec.push_back(c);
 	}
-	Component* find_component(std::string s)
+	std::unique_ptr<Component> find_component(std::string s)
 	{
-		for (Component* c : m_compvec)
+		for (auto& c : m_compvec)
 		{
 			if (c->get_name() == s)
 			{
-				return c;
+				return std::move(c);
 			}
 		}
 		return NULL;
 	}
 	void print()
 	{
-		for (Component* c : m_compvec)
+		for (auto& c : m_compvec)
 		{
 			std::cout << c->get_name() << " ";
 		}
 	}
 private:
 	std::string m_name;
-	std::vector<Component*> m_compvec;
+	std::vector<std::unique_ptr<Component>> m_compvec;
 };
 

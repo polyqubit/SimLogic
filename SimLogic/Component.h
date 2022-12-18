@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <memory>
 
 class Component
 {
@@ -11,7 +12,7 @@ public:
 	void propagate(bool)
 	{
 	}
-	void add_child(Component*)
+	void add_child(std::unique_ptr<Component>)
 	{
 	}
 	std::string get_name()
@@ -39,16 +40,16 @@ public:
 			i->propagate(pass);
 		}
 	}
-	void add_child(Component* c)
+	void add_child(std::unique_ptr<Component> c)
 	{
-		m_compvec.push_back(c);
+		m_compvec.push_back(std::move(c));
 	}
 	std::string get_type()
 	{
 		return "Input";
 	}
 private:
-	std::vector<Component*> m_compvec;
+	std::vector<std::unique_ptr<Component>> m_compvec;
 };
 
 class And : public Component
@@ -56,7 +57,10 @@ class And : public Component
 public:
 	And(std::string s, int n) : Component(s)
 	{
-		limit = n;
+		if (n < 8)
+			limit = n;
+		else
+			limit = 8;
 	}
 	void propagate(bool pass)
 	{
@@ -86,16 +90,16 @@ public:
 			i->propagate(store);
 		}
 	}
-	void add_child(Component* c)
+	void add_child(std::unique_ptr<Component> c)
 	{
-		m_compvec.push_back(c);
+		m_compvec.push_back(std::move(c));
 	}
 	std::string get_type()
 	{
 		return "And";
 	}
 private:
-	std::vector<Component*> m_compvec;
+	std::vector<std::unique_ptr<Component>> m_compvec;
 	bool m_boolarray[8] = { false };
 	int limit;
 	int c;
@@ -106,7 +110,10 @@ class Or : public Component
 public:
 	Or(std::string s, int n) : Component(s)
 	{
-		limit = n;
+		if (n < 8)
+			limit = n;
+		else
+			limit = 8;
 	}
 	void propagate(bool pass)
 	{
@@ -136,16 +143,16 @@ public:
 			i->propagate(store);
 		}
 	}
-	void add_child(Component* c)
+	void add_child(std::unique_ptr<Component> c)
 	{
-		m_compvec.push_back(c);
+		m_compvec.push_back(std::move(c));
 	}
 	std::string get_type()
 	{
 		return "Or";
 	}
 private:
-	std::vector<Component*> m_compvec;
+	std::vector<std::unique_ptr<Component>> m_compvec;
 	bool m_boolarray[8] = { false };
 	int limit;
 	int c;
@@ -177,16 +184,16 @@ public:
 			i->propagate(store);
 		}
 	}
-	void add_child(Component* c)
+	void add_child(std::unique_ptr<Component> c)
 	{
-		m_compvec.push_back(c);
+		m_compvec.push_back(std::move(c));
 	}
 	std::string get_type()
 	{
 		return "Xor";
 	}
 private:
-	std::vector<Component*> m_compvec;
+	std::vector<std::unique_ptr<Component>> m_compvec;
 	bool* m_boolarray = new bool[2];
 	int c = 0;
 };
@@ -204,16 +211,16 @@ public:
 			i->propagate(!pass);
 		}
 	}
-	void add_child(Component* c)
+	void add_child(std::unique_ptr<Component> c)
 	{
-		m_compvec.push_back(c);
+		m_compvec.push_back(std::move(c));
 	}
 	std::string get_type()
 	{
 		return "Not";
 	}
 private:
-	std::vector<Component*> m_compvec;
+	std::vector<std::unique_ptr<Component>> m_compvec;
 };
 
 class Output : public Component
@@ -238,6 +245,5 @@ public:
 		return "Output";
 	}
 private:
-	std::vector<Component*> m_compvec;
 	int state = -1;
 };
