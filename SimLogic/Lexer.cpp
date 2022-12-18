@@ -27,8 +27,8 @@ Message Lexer::produce_tokens(std::string in) {
 			break;
 		}
 		std::unique_ptr<Circuit> c(new Circuit(in.substr(1, in.length() - 1)));
-		m_cvec.push_back(std::move(c));
-		m_cstack.push(std::move(c));
+		m_cvec.push_back(c); //std::copy()
+		m_cstack.push(c);
 		break;
 	}
 	case 'I':
@@ -195,7 +195,7 @@ Message Lexer::produce_tokens(std::string in) {
 				wrong.incorrect = true;
 				return wrong;
 			}
-			tempcvec.push_back(std::move(finding));
+			tempcvec.push_back(finding); //std::copy()
 		}
 		if (in.find("->") == std::string::npos)
 		{
