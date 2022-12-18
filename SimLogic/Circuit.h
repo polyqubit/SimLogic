@@ -12,6 +12,7 @@ public:
 		m_name = n;
 	}
 	Circuit(Circuit&) = default;
+	~Circuit() = default;
 	void add_component(std::unique_ptr<Component> c)
 	{
 		m_compvec.push_back(c);

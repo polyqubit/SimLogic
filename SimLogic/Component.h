@@ -10,6 +10,7 @@ public:
 		m_name = s;
 	}
 	Component(Component&) = default;
+	~Component() = default;
 	void propagate(bool)
 	{
 	}
@@ -35,6 +36,7 @@ public:
 	{
 	}
 	Input(Input&) = default;
+	~Input() = default;
 	void propagate(bool pass)
 	{
 		for (auto& i : m_compvec)
@@ -63,6 +65,7 @@ public:
 			limit = n;
 	}
 	And(And&) = default;
+	~And() = default;
 	void propagate(bool pass)
 	{
 		if (c == limit)
@@ -115,6 +118,7 @@ public:
 			limit = n;
 	}
 	Or(Or&) = default;
+	~Or() = default;
 	void propagate(bool pass)
 	{
 		if (c == limit)
@@ -165,6 +169,7 @@ public:
 	{
 	}
 	Xor(Xor&) = default;
+	~Xor() = default;
 	void propagate(bool pass)
 	{
 		if (c == 2)
@@ -206,6 +211,7 @@ public:
 	{
 	}
 	Not(Not&) = default;
+	~Not() = default;
 	void propagate(bool pass)
 	{
 		for (auto& i : m_compvec)
@@ -232,6 +238,7 @@ public:
 	{
 	}
 	Output(Output&) = default;
+	~Output() = default;
 	void propagate(bool pass)
 	{
 		if (pass)
