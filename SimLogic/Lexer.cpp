@@ -189,13 +189,35 @@ Message Lexer::produce_tokens(std::string in) {
 				std::string input = temp.substr(0, temp.find(','));
 				temp = temp.substr(temp.find(',') + 1);
 			}
-			if(m_cstack.top()->find_component(input)==NULL)
+			Component* finding = m_cstack.top()->find_component(input);
+			if (finding == NULL)
 			{
 				Message wrong;
 				wrong.message = "Component not found: " + input + "\n";
 				wrong.incorrect = true;
 				return wrong;
 			}
+			tempcvec.push_back(finding);
+		}
+		if (in.find("->") == std::string::npos)
+		{
+			Message wrong;
+			wrong.message = "Missing \'->\': " + in + "\n";
+			wrong.incorrect = true;
+			return wrong;
+		}
+		std::string into = in.substr(in.find('>') + 1);
+		Component* finding = m_cstack.top()->find_component(into);
+		if (finding == NULL)
+		{
+			Message wrong;
+			wrong.message = "Component not found: " + into + "\n";
+			wrong.incorrect = true;
+			return wrong;
+		}
+		for (Component* c : tempcvec)
+		{
+			c->add_child(finding);
 		}
 		break;
 	}
@@ -230,6 +252,10 @@ Message Lexer::read_file(std::string in)
 		m_linevec.push_back(a);
 	}
 	ifs.close();
+	for (std::string s : m_linevec)
+	{
+		produce_tokens(s);
+	}
 	Message right;
 	right.message = "OK\n";
 	return right;
@@ -241,4 +267,9 @@ void Lexer::output_linevec()
 	{
 		std::cout << i << "\n";
 	}
+}
+
+void Lexer::output_circ()
+{
+	m_cvec.at(0)->print();
 }

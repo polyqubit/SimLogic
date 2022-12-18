@@ -26,6 +26,13 @@ public:
 		}
 		return NULL;
 	}
+	void print()
+	{
+		for (Component* c : m_compvec)
+		{
+			std::cout << c->get_name() << " ";
+		}
+	}
 private:
 	std::string m_name;
 	std::vector<Component*> m_compvec;

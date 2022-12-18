@@ -23,6 +23,7 @@ public:
 	Message produce_tokens(std::string);
 	Message read_file(std::string);
 	void output_linevec();
+	void output_circ();
 private:
 	std::vector<std::string> m_linevec;
 	std::vector<Circuit*> m_cvec;

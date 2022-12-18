@@ -8,7 +8,12 @@ public:
 	{
 		m_name = s;
 	}
-	void propagate(bool);
+	void propagate(bool)
+	{
+	}
+	void add_child(Component*)
+	{
+	}
 	std::string get_name()
 	{
 		return m_name;
