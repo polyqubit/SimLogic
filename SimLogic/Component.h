@@ -30,7 +30,7 @@ public:
 	{
 		return "Component";
 	}
-	int get_state() const
+	virtual int get_state() const
 	{
 		std::cout << "state comp\n";
 		return -1;
@@ -261,7 +261,7 @@ public:
 		else
 			state = 0;
 	}
-	int get_state()
+	int get_state() const
 	{
 		std::cout << "state check\n";
 		return state;
