@@ -295,7 +295,10 @@ Message Lexer::evaluate_circ()
 			wrong.incorrect = true;
 			return wrong;
 		}
-		invec->at(i)->propagate(val);
+		if(val==1)
+			invec->at(i)->propagate(true);
+		else
+			invec->at(i)->propagate(false);
 	}
 	std::string build = "";
 	std::shared_ptr<std::vector<std::shared_ptr<Component>>> outvec = m_cvec.at(0)->get_outputs();

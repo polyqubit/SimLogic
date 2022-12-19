@@ -49,7 +49,7 @@ public:
 	~Input() = default;
 	void propagate(bool pass)
 	{
-		std::cout << "propagate INP\n";
+		std::cout << "propagate INP: " << pass << std::endl;
 		for (auto& i : m_compvec)
 		{
 			i->propagate(pass);
@@ -80,14 +80,14 @@ public:
 	void propagate(bool pass)
 	{
 		std::cout << "propagate AND\n";
-		++c;
-		if (c == limit)
+		if (c == limit-1)
 		{
 			real_propagate();
 		}
 		else
 		{
 			m_boolarray[c] = pass;
+			++c;
 		}
 	}
 	void real_propagate()
@@ -135,14 +135,14 @@ public:
 	~Or() = default;
 	void propagate(bool pass)
 	{
-		++c;
-		if (c == limit)
+		if (c == limit-1)
 		{
 			real_propagate();
 		}
 		else
 		{
 			m_boolarray[c] = pass;
+			++c;
 		}
 	}
 	void real_propagate()
@@ -186,7 +186,6 @@ public:
 	~Xor() = default;
 	void propagate(bool pass)
 	{
-		++c;
 		if (c == 2)
 		{
 			real_propagate();
@@ -194,6 +193,7 @@ public:
 		else
 		{
 			m_boolarray[c] = pass;
+			++c;
 		}
 	}
 	void real_propagate()
