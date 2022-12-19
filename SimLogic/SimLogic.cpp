@@ -32,7 +32,10 @@ int main()
 	Lexer lex;
 	Message test = lex.read_file("files\\" + inp + ".txt");
 	std::cout << test.message << "\n";
-	if(test.incorrect)
+	if (test.incorrect)
+	{
 		lex.output_linevec();
+		exit(-1);
+	}
 	std::cout << lex.evaluate_circ().message;
 }

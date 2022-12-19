@@ -79,9 +79,9 @@ public:
 	~And() = default;
 	void propagate(bool pass)
 	{
-		std::cout << "propagate AND\n";
 		if (c == limit-1)
 		{
+			m_boolarray[c] = pass;
 			real_propagate();
 		}
 		else
@@ -96,6 +96,7 @@ public:
 		bool store = true;
 		for (int i = 0; i < limit; ++i)
 		{
+			//std::cout << i << "val: " << m_boolarray[i] << std::endl;
 			if (!m_boolarray[i])
 			{
 				store = false;
