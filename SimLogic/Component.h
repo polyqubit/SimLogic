@@ -12,11 +12,15 @@ public:
 	}
 	Component(Component&) = default;
 	~Component() = default;
-	void propagate(bool)
+	virtual void propagate(bool)
 	{
+		std::cout << "prop comp\n";
+		return;
 	}
-	void add_child(std::shared_ptr<Component>)
+	virtual void add_child(std::shared_ptr<Component>)
 	{
+		std::cout << "add comp\n";
+		return;
 	}
 	std::string get_name() const
 	{
@@ -28,6 +32,7 @@ public:
 	}
 	int get_state() const
 	{
+		std::cout << "state comp\n";
 		return -1;
 	}
 private:
@@ -44,6 +49,7 @@ public:
 	~Input() = default;
 	void propagate(bool pass)
 	{
+		std::cout << "propagate INP\n";
 		for (auto& i : m_compvec)
 		{
 			i->propagate(pass);
@@ -73,6 +79,7 @@ public:
 	~And() = default;
 	void propagate(bool pass)
 	{
+		std::cout << "propagate AND\n";
 		if (c == limit)
 		{
 			real_propagate();
@@ -246,6 +253,7 @@ public:
 	~Output() = default;
 	void propagate(bool pass)
 	{
+		std::cout << "propagate OUT\n";
 		if (pass)
 			state = 1;
 		else
@@ -253,6 +261,7 @@ public:
 	}
 	int get_state()
 	{
+		std::cout << "state check\n";
 		return state;
 	}
 	std::string get_type() const
