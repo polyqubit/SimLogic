@@ -23,6 +23,7 @@ class Lexer
 public:
 	Message produce_tokens(std::string);
 	Message read_file(std::string);
+	Message evaluate_circ();
 	void output_linevec();
 	void output_circ();
 private:

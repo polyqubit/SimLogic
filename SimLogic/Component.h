@@ -18,13 +18,17 @@ public:
 	void add_child(std::shared_ptr<Component>)
 	{
 	}
-	std::string get_name()
+	std::string get_name() const
 	{
 		return m_name;
 	}
-	virtual std::string get_type()
+	virtual std::string get_type() const
 	{
 		return "Component";
+	}
+	int get_state() const
+	{
+		return -1;
 	}
 private:
 	std::string m_name = "";
@@ -49,7 +53,7 @@ public:
 	{
 		m_compvec.push_back(std::move(c));
 	}
-	std::string get_type()
+	std::string get_type() const
 	{
 		return "Input";
 	}
@@ -99,7 +103,7 @@ public:
 	{
 		m_compvec.push_back(std::move(c));
 	}
-	std::string get_type()
+	std::string get_type() const
 	{
 		return "And";
 	}
@@ -152,7 +156,7 @@ public:
 	{
 		m_compvec.push_back(std::move(c));
 	}
-	std::string get_type()
+	std::string get_type() const
 	{
 		return "Or";
 	}
@@ -195,7 +199,7 @@ public:
 	{
 		m_compvec.push_back(std::move(c));
 	}
-	std::string get_type()
+	std::string get_type() const
 	{
 		return "Xor";
 	}
@@ -224,7 +228,7 @@ public:
 	{
 		m_compvec.push_back(std::move(c));
 	}
-	std::string get_type()
+	std::string get_type() const
 	{
 		return "Not";
 	}
@@ -251,7 +255,7 @@ public:
 	{
 		return state;
 	}
-	std::string get_type()
+	std::string get_type() const
 	{
 		return "Output";
 	}

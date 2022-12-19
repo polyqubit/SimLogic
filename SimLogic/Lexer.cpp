@@ -278,6 +278,36 @@ Message Lexer::read_file(std::string in)
 	return right;
 }
 
+Message Lexer::evaluate_circ()
+{
+	//check later if the circuit is {main}
+	std::cout << "input values(0 or 1) for circuit " << m_cvec.at(0)->get_name() << ":\n";
+	std::shared_ptr<std::vector<std::shared_ptr<Component>>> invec = m_cvec.at(0)->get_inputs();
+	for (size_t i = 0; i < invec->size(); ++i)
+	{
+		std::cout << "input " << i << ": " << invec->at(i);
+		int val = -1;
+		std::cin >> val;
+		if ((val != 0) && (val != 1))
+		{
+			Message wrong;
+			wrong.message = "Incorrect input\n";
+			wrong.incorrect = true;
+			return wrong;
+		}
+		invec->at(i)->propagate(val);
+	}
+	std::string build = "";
+	std::shared_ptr<std::vector<std::shared_ptr<Component>>> outvec = m_cvec.at(0)->get_outputs();
+	for (size_t i = 0; i < outvec->size(); ++i)
+	{
+		build = build + outvec->at(i)->get_name() + ": " + std::to_string(outvec->at(i)->get_state()) + "\n";
+	}
+	Message right;
+	right.message = build;
+	return right;
+}
+
 void Lexer::output_linevec()
 {
 	int c = 0;

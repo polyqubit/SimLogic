@@ -1,7 +1,7 @@
-{circA}
+{main}
 IN:ia,ib
 AND:aa#2
 OUT:oa
 (ia,ib)->aa
 (aa)->oa
-{/circA}
+{/main}
