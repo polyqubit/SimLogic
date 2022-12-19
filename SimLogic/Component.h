@@ -261,7 +261,7 @@ public:
 		else
 			state = 0;
 	}
-	int get_state() const
+	int get_state() const //in base class: virtual method() const{}, in derived: method() const{}
 	{
 		std::cout << "state check\n";
 		return state;
