@@ -285,7 +285,7 @@ Message Lexer::evaluate_circ()
 	std::shared_ptr<std::vector<std::shared_ptr<Component>>> invec = m_cvec.at(0)->get_inputs();
 	for (size_t i = 0; i < invec->size(); ++i)
 	{
-		std::cout << "input " << i << ": " << invec->at(i);
+		std::cout << "input " << invec->at(i)->get_name() << ": ";
 		int val = -1;
 		std::cin >> val;
 		if ((val != 0) && (val != 1))
