@@ -1,7 +1,7 @@
 {main}
 IN:ia,ib
-AND:aa#2
+OR:ora#2
 OUT:oa
-(ia,ib)->aa
-(aa)->oa
+(ia,ib)->ora
+(ora)->oa
 {/main}

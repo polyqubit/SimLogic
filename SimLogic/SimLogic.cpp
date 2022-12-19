@@ -34,8 +34,8 @@ int main()
 	std::cout << test.message << "\n";
 	if (test.incorrect)
 	{
-		lex.output_linevec();
 		exit(-1);
 	}
+	lex.output_linevec();
 	std::cout << lex.evaluate_circ().message;
 }

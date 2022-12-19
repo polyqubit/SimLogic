@@ -14,12 +14,10 @@ public:
 	~Component() = default;
 	virtual void propagate(bool)
 	{
-		std::cout << "prop comp\n";
 		return;
 	}
 	virtual void add_child(std::shared_ptr<Component>)
 	{
-		std::cout << "add comp\n";
 		return;
 	}
 	std::string get_name() const
@@ -32,7 +30,6 @@ public:
 	}
 	virtual int get_state() const
 	{
-		std::cout << "state comp\n";
 		return -1;
 	}
 private:
@@ -49,7 +46,6 @@ public:
 	~Input() = default;
 	void propagate(bool pass)
 	{
-		std::cout << "propagate INP: " << pass << std::endl;
 		for (auto& i : m_compvec)
 		{
 			i->propagate(pass);
@@ -92,18 +88,15 @@ public:
 	}
 	void real_propagate()
 	{
-		std::cout << "real propagate AND: ";
 		bool store = true;
 		for (int i = 0; i < limit; ++i)
 		{
-			//std::cout << i << "val: " << m_boolarray[i] << std::endl;
 			if (!m_boolarray[i])
 			{
 				store = false;
 				break;
 			}
 		}
-		std::cout << store << std::endl;
 		for (auto& i : m_compvec)
 		{
 			i->propagate(store);
@@ -138,6 +131,7 @@ public:
 	{
 		if (c == limit-1)
 		{
+			m_boolarray[c] = pass;
 			real_propagate();
 		}
 		else
@@ -257,7 +251,6 @@ public:
 	~Output() = default;
 	void propagate(bool pass)
 	{
-		std::cout << "propagate OUT\n";
 		if (pass)
 			state = 1;
 		else
@@ -265,7 +258,6 @@ public:
 	}
 	int get_state() const //in base class: virtual method() const{}, in derived: method() const{}
 	{
-		std::cout << "state check\n";
 		return state;
 	}
 	std::string get_type() const
