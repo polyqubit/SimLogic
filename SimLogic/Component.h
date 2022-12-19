@@ -80,6 +80,7 @@ public:
 	void propagate(bool pass)
 	{
 		std::cout << "propagate AND\n";
+		++c;
 		if (c == limit)
 		{
 			real_propagate();
@@ -87,11 +88,11 @@ public:
 		else
 		{
 			m_boolarray[c] = pass;
-			c++;
 		}
 	}
 	void real_propagate()
 	{
+		std::cout << "real propagate AND\n";
 		bool store = true;
 		for (int i = 0; i < limit; ++i)
 		{
@@ -133,6 +134,7 @@ public:
 	~Or() = default;
 	void propagate(bool pass)
 	{
+		++c;
 		if (c == limit)
 		{
 			real_propagate();
@@ -140,7 +142,6 @@ public:
 		else
 		{
 			m_boolarray[c] = pass;
-			c++;
 		}
 	}
 	void real_propagate()
@@ -184,6 +185,7 @@ public:
 	~Xor() = default;
 	void propagate(bool pass)
 	{
+		++c;
 		if (c == 2)
 		{
 			real_propagate();
