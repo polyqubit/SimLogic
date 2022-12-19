@@ -181,8 +181,9 @@ public:
 	~Xor() = default;
 	void propagate(bool pass)
 	{
-		if (c == 2)
+		if (c == 1)
 		{
+			m_boolarray[c] = pass;
 			real_propagate();
 		}
 		else
