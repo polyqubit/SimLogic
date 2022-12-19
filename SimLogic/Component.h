@@ -92,7 +92,7 @@ public:
 	}
 	void real_propagate()
 	{
-		std::cout << "real propagate AND\n";
+		std::cout << "real propagate AND: ";
 		bool store = true;
 		for (int i = 0; i < limit; ++i)
 		{
@@ -102,6 +102,7 @@ public:
 				break;
 			}
 		}
+		std::cout << store << std::endl;
 		for (auto& i : m_compvec)
 		{
 			i->propagate(store);
