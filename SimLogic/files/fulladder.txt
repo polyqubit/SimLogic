@@ -1,0 +1,14 @@
+{main}
+IN:a,b,cin
+XOR:x1,x2
+AND:a1#2,a2#2
+OR:o1#2
+OUT:sum,cout
+(a,b)->x1
+(a,b)->a2
+(x1,cin)->x2
+(x1,cin)->a1
+(a1,a2)->o1
+(x2)->sum
+(o1)->cout
+{/main}

@@ -1,7 +1,0 @@
-{main}
-IN:ia,ib
-OR:ora#2
-OUT:oa
-(ia,ib)->ora
-(ora)->oa
-{/main}

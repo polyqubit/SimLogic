@@ -4,6 +4,10 @@
 // **note on substr: s.substr(start_idx,length) not s.substr(start_idx,end_idx)**
 // to get start -> end: s.substr(start_idx,end_idx-start_idx+1)
 
+//todo: check for # on xor and not, notify user that (xor|not)#num is incorrect:
+//XOR on numerous inputs is not standardized
+//NOT is strictly 1 in 1 out
+
 Message Lexer::produce_tokens(std::string in) {
 	if (in.length() < 2)
 	{
@@ -196,6 +200,33 @@ Message Lexer::produce_tokens(std::string in) {
 		}
 		break;
 	}
+	case 'X':
+	{
+		if (in.substr(0, in.find(':')) != "XOR")
+		{
+			Message wrong;
+			wrong.message = "Unknown token: " + in.substr(0, in.find(':')) + "\n";
+			wrong.incorrect = true;
+			return wrong;
+		}
+		std::string temp = in.substr(in.find(':') + 1);
+		while (temp != "")
+		{
+			std::string input;
+			if (temp.find(',') == std::string::npos)
+			{
+				input = temp;
+				temp = "";
+			}
+			else
+			{
+				input = temp.substr(0, temp.find(','));
+				temp = temp.substr(temp.find(',') + 1);
+			}
+			m_cstack.top()->add_component(std::make_shared<Xor>(input));
+		}
+		break;
+	}
 	case '(':
 	{
 		if (in.find(')') == std::string::npos)
@@ -291,7 +322,6 @@ Message Lexer::read_file(std::string in)
 		{
 			return temp;
 		}
-		std::cout << ++c << std::endl;
 	}
 	Message right;
 	right.message = "OK\n";

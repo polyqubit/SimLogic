@@ -1,0 +1,7 @@
+{main}
+IN:in1,in2,in3
+AND:and1#3
+OUT:out1
+(in1,in2,in3)->and1
+(and1)->out1
+{/main}

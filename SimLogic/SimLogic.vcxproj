@@ -135,10 +135,6 @@
     <ClCompile Include="SimLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="files\logic.txt" />
-    <Text Include="files\prog1.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Circuit.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Lexer.h" />
