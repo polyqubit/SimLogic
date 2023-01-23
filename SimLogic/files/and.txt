@@ -1,0 +1,7 @@
+{A}
+IN:a,b
+AND:aa#2
+OUT:oa
+(a,b)->aa
+(aa)->oa
+{/}
